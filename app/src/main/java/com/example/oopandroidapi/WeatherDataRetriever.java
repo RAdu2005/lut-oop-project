@@ -12,7 +12,7 @@ import java.net.URL;
 
 public class WeatherDataRetriever {
 
-    private final String API_KEY =  "cdaef1beb6e0e95bbdcc1d3671c48a71";
+    private final String API_KEY =  "YOUR_API_KEY_GOES_HERE";
 
     // https://api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&appid={API key}
     private final String WEATHER_API_URL = "https://api.openweathermap.org/data/2.5/weather?lat=%s&lon=%s&appid=%s";
