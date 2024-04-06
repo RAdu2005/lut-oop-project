@@ -23,8 +23,9 @@ More information about the settings and endpoints in this document.
 
 To be able to access network you need following lines in your AndroidManifest.xml
 
-<uses-permission android:name="android.permission.INTERNET" />
-<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+> <uses-permission android:name="android.permission.INTERNET" />
+> <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
  
 In the case of OpenWeather API, you also need to add
 
