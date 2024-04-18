@@ -39,7 +39,7 @@ to the AndroidManifest.xml
 ### app/build.gradle changes
 
 To be able to use Jackson library for parsing JSON, you need following dependency in your 
-app/build.gradle file:
+[app/build.gradle](https://version.lab.fi/Katja.Karhu/oop-android-api-example/-/blob/main/app/build.gradle?ref_type=heads) file:
 
     implementation libs.jackson.core
     implementation libs.jackson.databind
