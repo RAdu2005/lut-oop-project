@@ -1,0 +1,62 @@
+{
+    "query": [
+      {
+        "code": "Vaalipiiri ja kunta",
+        "selection": {
+          "filter": "item",
+          "values": [
+            "011091"
+          ]
+        }
+      },
+      {
+        "code": "Puolue",
+        "selection": {
+          "filter": "item",
+          "values": [
+            "203",
+            "201",
+            "204",
+            "202",
+            "205",
+            "206",
+            "207",
+            "208",
+            "209",
+            "221",
+            "214",
+            "211",
+            "220",
+            "212",
+            "216",
+            "210",
+            "219",
+            "217",
+            "213",
+            "299"
+          ]
+        }
+      },
+      {
+        "code": "Ehdokkaan sukupuoli",
+        "selection": {
+          "filter": "item",
+          "values": [
+            "SSS"
+          ]
+        }
+      },
+      {
+        "code": "Tiedot",
+        "selection": {
+          "filter": "item",
+          "values": [
+            "osuus_val"
+          ]
+        }
+      }
+    ],
+    "response": {
+      "format": "json-stat2"
+    }
+  }

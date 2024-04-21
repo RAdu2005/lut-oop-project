@@ -1,60 +1,40 @@
 package com.example.oopandroidapi;
 
 public class WeatherData {
-    private String name;
-    private String main;
-    private String description;
-    private String temperature;
+    private String weather;
+    private long temperature, windSpeed, humidity;
+    private float lat, lon;
 
-    private String windSpeed;
-
-
-    public WeatherData(String name, String main, String description, String temperature, String windSpeed) {
-        this.name = name;
-        this.main = main;
-        this.description = description;
-        this.temperature = temperature;
+    public WeatherData(String weather, long tempreature, long windSpeed, long humidity, float lat, float lon){
+        this.weather = weather;
+        this.temperature = tempreature;
         this.windSpeed = windSpeed;
+        this.humidity = humidity;
+        this.lat = lat;
+        this.lon = lon;
     }
 
-    public String getName() {
-        return name;
+    public String getWeather(){
+        return weather;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getMain() {
-        return main;
-    }
-
-    public void setMain(String main) {
-        this.main = main;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public String getTemperature() {
+    public long getTemperature(){
         return temperature;
     }
 
-    public void setTemperature(String temperature) {
-        this.temperature = temperature;
-    }
-
-    public String getWindSpeed() {
+    public long getWindSpeed(){
         return windSpeed;
     }
 
-    public void setWindSpeed(String windSpeed) {
-        this.windSpeed = windSpeed;
+    public long getHumidity(){
+        return humidity;
     }
 
+    public float getLatitude(){
+        return lat;
+    }
+
+    public float getLongitude(){
+        return lon;
+    }
 }

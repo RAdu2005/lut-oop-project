@@ -2,25 +2,38 @@ package com.example.oopandroidapi;
 
 public class MunicipalityData {
 
-    private int year;
-    private int population;
+    private PopulationData population;
+    private WeatherData weather;
+    private CrimeData crime;
+    private HealthData health;
+    private PoliticalData politics;
 
 
-    public MunicipalityData(int year, int population) {
-        this.year = year;
+    public MunicipalityData(PopulationData population, WeatherData weather, CrimeData crime, HealthData health, PoliticalData politics) {
         this.population = population;
+        this.weather = weather;
+        this.crime = crime;
+        this.health = health;
+        this.politics = politics;
     }
-    public int getYear() {
-        return year;
-    }
-    public void setYear(int year) {
-        this.year = year;
-    }
-    public int getPopulation() {
+    
+    public PopulationData getPopulationData(){
         return population;
     }
-    public void setPopulation(int population) {
-        this.population = population;
+
+    public WeatherData getWeatherData(){
+        return weather;
     }
 
+    public CrimeData getCrimeData(){
+        return crime;
+    }
+
+    public HealthData getHealthData(){
+        return health;
+    }
+
+    public PoliticalData getPoliticalData(){
+        return politics;
+    }
 }
