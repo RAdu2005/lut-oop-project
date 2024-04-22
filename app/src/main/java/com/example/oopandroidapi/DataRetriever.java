@@ -285,9 +285,8 @@ public class DataRetriever {
             return new PoliticalData(returnMap);
         }
         
-        //Getting local council composition by % (with Statistics Finalnd)
+        //Getting local council composition by % (with Statistics Finland)
         JsonNode politicalData = getData(context.getResources().openRawResource(R.raw.query_political), politicalDataURL, 0, constituencyCode);
-
         ArrayList<String> keys = new ArrayList<>();
         Iterator<String> keyIterator = politicalData.get("dimension").get("Puolue").get("category").get("label").fieldNames();
         while(keyIterator.hasNext()){

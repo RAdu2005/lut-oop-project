@@ -1,5 +1,9 @@
 package com.example.oopandroidapi;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.widget.TextView;
 
@@ -8,10 +12,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.LinkedHashMap;
+import java.util.Map;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -53,7 +59,7 @@ public class MunicipalityInfoActivity extends AppCompatActivity {
         service.execute(new Runnable() {
             @Override
             public void run() {
-                MunicipalityData municipalityData = new MunicipalityData(municipalityName, getApplicationContext());
+                municipalityData = new MunicipalityData(municipalityName, getApplicationContext());
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
@@ -68,7 +74,7 @@ public class MunicipalityInfoActivity extends AppCompatActivity {
                         displayInformation.put("Weather", municipalityData.getWeatherData().getWeather());
                         updateList();
 
-                        displayInformation.put("Temperature (°)", String.valueOf(municipalityData.getWeatherData().getTemperature()));
+                        displayInformation.put("Temperature (°C)", String.valueOf(municipalityData.getWeatherData().getTemperature()));
                         updateList();
 
                         displayInformation.put("Wind speed (m/s)", String.valueOf(municipalityData.getWeatherData().getWindSpeed()));
@@ -81,11 +87,29 @@ public class MunicipalityInfoActivity extends AppCompatActivity {
                         displayInformation.put("Patients admitted to primary healthcare after more than 14 days (%)", String.valueOf(municipalityData.getHealthData().getPercentageOver14Days()));
                         updateList();
 
+                        //Displaying political data
+                        displayInformation.put("Political composition", "Click to show more");
+                        updateList();
+
+                        LocalBroadcastManager.getInstance(getApplicationContext()).registerReceiver(receiver, new IntentFilter("com.example.POLITICS_REQUESTED"));
                         }
                 });
             }
         });
     }
+
+    BroadcastReceiver receiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String data = intent.getStringExtra("isPressed");
+            if(data.equals("pressed")){
+                for(Map.Entry<String, Float> entry : municipalityData.getPoliticalData().getSortedAndNonNullPartyList().entrySet()){
+                    displayInformation.put(entry.getKey(), String.valueOf(entry.getValue()));
+                    updateList();
+                }
+            }
+        }
+    };
 
     private void updateList(){adapter.notifyItemInserted(adapter.getItemCount() - 1);}
 }

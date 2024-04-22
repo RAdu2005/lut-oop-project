@@ -1,10 +1,13 @@
 package com.example.oopandroidapi;
 
+import android.content.Intent;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 import android.content.Context;
 
 import androidx.annotation.NonNull;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.LinkedHashMap;
@@ -32,6 +35,31 @@ public class MunicipalityInfoListAdapter extends RecyclerView.Adapter<Municipali
             if(position == count){
                 holder.information.setText(entry.getKey());
                 holder.value.setText(entry.getValue());
+                if(entry.getKey().equals("Political composition")){
+                    holder.information.setClickable(true);
+                    holder.value.setClickable(true);
+
+                    holder.information.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Intent i = new Intent("com.example.POLITICS_REQUESTED");
+                            i.putExtra("isPressed", "pressed");
+                            LocalBroadcastManager.getInstance(context).sendBroadcast(i);
+                            holder.information.setClickable(false);
+                            holder.value.setClickable(false);
+                        }
+                    });
+                    holder.value.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Intent i = new Intent("com.example.POLITICS_REQUESTED");
+                            i.putExtra("isPressed", "pressed");
+                            LocalBroadcastManager.getInstance(context).sendBroadcast(i);
+                            holder.information.setClickable(false);
+                            holder.value.setClickable(false);
+                        }
+                    });
+                }
             }
             count++;
         }
