@@ -27,12 +27,19 @@ public class MunicipalityInfoListAdapter extends RecyclerView.Adapter<Municipali
 
     @Override
     public void onBindViewHolder(@NonNull MunicipalityInfoViewHolder holder, int position) {
-        holder.information.setText("Population");
-        holder.value.setText(displayInformation.get("Population"));
+        int count = 0;
+        for(Map.Entry<String, String> entry : displayInformation.entrySet()){
+            if(position == count){
+                holder.information.setText(entry.getKey());
+                holder.value.setText(entry.getValue());
+            }
+            count++;
+        }
     }
 
     @Override
     public int getItemCount() {
         return displayInformation.size();
     }
+
 }

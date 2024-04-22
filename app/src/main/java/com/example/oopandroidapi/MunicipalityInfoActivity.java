@@ -53,20 +53,39 @@ public class MunicipalityInfoActivity extends AppCompatActivity {
         service.execute(new Runnable() {
             @Override
             public void run() {
-                MunicipalityData municipalityData = new MunicipalityData(DataRetriever.getPopulationData(municipalityName, getApplicationContext()),
-                                                                         DataRetriever.getWeatherData(municipalityName),
-                                                                         DataRetriever.getCrimeData(municipalityName, getApplicationContext()),
-                                                                         DataRetriever.getHealthData(municipalityName),
-                                                                         DataRetriever.getPoliticalData(municipalityName, getApplicationContext()));
+                MunicipalityData municipalityData = new MunicipalityData(municipalityName, getApplicationContext());
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
+                        //Displaying population data
                         displayInformation.put("Population", String.valueOf(municipalityData.getPopulationData().getPopulation()));
+                        updateList();
 
-                        adapter.notifyDataSetChanged();
-                    }
+                        displayInformation.put("Population change", String.valueOf(municipalityData.getPopulationData().getPopulationChange()));
+                        updateList();
+
+                        //Displaying weather data
+                        displayInformation.put("Weather", municipalityData.getWeatherData().getWeather());
+                        updateList();
+
+                        displayInformation.put("Temperature (°)", String.valueOf(municipalityData.getWeatherData().getTemperature()));
+                        updateList();
+
+                        displayInformation.put("Wind speed (m/s)", String.valueOf(municipalityData.getWeatherData().getWindSpeed()));
+                        updateList();
+
+                        displayInformation.put("Humidity (%)", String.valueOf(municipalityData.getWeatherData().getHumidity()));
+                        updateList();
+
+                        //Displaying health data
+                        displayInformation.put("Patients admitted to primary healthcare after more than 14 days (%)", String.valueOf(municipalityData.getHealthData().getPercentageOver14Days()));
+                        updateList();
+
+                        }
                 });
             }
         });
     }
+
+    private void updateList(){adapter.notifyItemInserted(adapter.getItemCount() - 1);}
 }

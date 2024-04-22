@@ -5,9 +5,9 @@ public class WeatherData {
     private long temperature, windSpeed, humidity;
     private float lat, lon;
 
-    public WeatherData(String weather, long tempreature, long windSpeed, long humidity, float lat, float lon){
+    public WeatherData(String weather, long temperature, long windSpeed, long humidity, float lat, float lon){
         this.weather = weather;
-        this.temperature = tempreature;
+        this.temperature = temperature;
         this.windSpeed = windSpeed;
         this.humidity = humidity;
         this.lat = lat;

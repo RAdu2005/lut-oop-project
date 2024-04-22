@@ -1,39 +1,36 @@
 package com.example.oopandroidapi;
 
+import android.content.Context;
+
 public class MunicipalityData {
 
-    private PopulationData population;
-    private WeatherData weather;
-    private CrimeData crime;
-    private HealthData health;
-    private PoliticalData politics;
+    private PopulationData population = null;
+    private WeatherData weather = null;
+    private HealthData health = null;
+    private PoliticalData politics = null;
 
-
-    public MunicipalityData(PopulationData population, WeatherData weather, CrimeData crime, HealthData health, PoliticalData politics) {
-        this.population = population;
-        this.weather = weather;
-        this.crime = crime;
-        this.health = health;
-        this.politics = politics;
+    public MunicipalityData(String municipalityName, Context context) {
+        this.population = DataRetriever.getPopulationData(municipalityName, context);
+        this.weather = DataRetriever.getWeatherData(municipalityName);
+        this.health = DataRetriever.getHealthData(municipalityName);
+        this.politics = DataRetriever.getPoliticalData(municipalityName, context);
     }
-    
-    public PopulationData getPopulationData(){
+
+    public PopulationData getPopulationData() {
         return population;
     }
 
-    public WeatherData getWeatherData(){
+    public WeatherData getWeatherData() {
         return weather;
     }
 
-    public CrimeData getCrimeData(){
-        return crime;
-    }
 
-    public HealthData getHealthData(){
+    public HealthData getHealthData() {
         return health;
     }
 
-    public PoliticalData getPoliticalData(){
+    public PoliticalData getPoliticalData() {
         return politics;
     }
+
 }

@@ -29,7 +29,6 @@ public class DataRetriever {
     private static final String populationDataURL = "https://pxdata.stat.fi:443/PxWeb/api/v1/en/StatFin/synt/statfin_synt_pxt_12dy.px";
     private static final String employmentDataURL = "https://pxdata.stat.fi:443/PxWeb/api/v1/en/StatFin/tyokay/statfin_tyokay_pxt_115x.px";
     private static final String sufficencyDataURL = "https://pxdata.stat.fi:443/PxWeb/api/v1/en/StatFin/tyokay/statfin_tyokay_pxt_125s.px";
-    private static final String crimeDataURL = "https://pxdata.stat.fi:443/PxWeb/api/v1/en/StatFin/rpk/statfin_rpk_pxt_13it.px";
     private static final String municipalityAVICodeURL = "https://data.stat.fi/api/classifications/v2/correspondenceTables/kunta_1_20240101%23avi_1_20240101/maps?content=data&format=json&lang=en&meta=min";
     private static final String healthDataURL = "https://sampo.thl.fi/pivot/prod/fi/avohpaasy/pthjono01/fact_ahil_pthjono01.json";
     private static final String politicalDataURL = "https://pxdata.stat.fi:443/PxWeb/api/v1/en/StatFin/kvaa/statfin_kvaa_pxt_12xf.px";
@@ -232,34 +231,6 @@ public class DataRetriever {
         return new WeatherData(weatherMain, weatherTemp, weatherWind, weatherHumidity, cityLat, cityLon);
     }
 
-    public static CrimeData getCrimeData(String municipalityName, Context context){
-        String code = municipalityNamesToCodesMap.get(municipalityName);
-        //Getting violent crime data (with Statistics Finland)
-
-        JsonNode violentCrimeData = getData(context.getResources().openRawResource(R.raw.query_violent_crimes), crimeDataURL, 1, code);
-        Iterator<JsonNode> iterator = violentCrimeData.withArray("value").elements();
-        
-        int count = 0, violentCrimes = 0;
-        while(iterator.hasNext()){
-            JsonNode dataset = iterator.next();
-            violentCrimes += dataset.intValue();
-            count++;
-        }
-
-        JsonNode nonViolentCrimeData = getData(context.getResources().openRawResource(R.raw.query_non_violent_crimes), crimeDataURL, 1, code);
-        iterator = nonViolentCrimeData.withArray("value").elements();
-        
-        int nonViolentCrimes = 0;
-        count = 0;
-        while(iterator.hasNext()){
-            JsonNode dataset = iterator.next();
-            nonViolentCrimes += dataset.intValue();
-            count++;
-        }
-
-        return new CrimeData(violentCrimes, nonViolentCrimes);
-    }
-
     public static HealthData getHealthData(String municipalityName){
         String code = municipalityNamesToCodesMap.get(municipalityName);
         code = code.substring(2, 5);
@@ -334,9 +305,5 @@ public class DataRetriever {
         }
         
         return new PoliticalData(returnMap);
-    }
-
-    private static void printToOutJSON(JsonNode input){
-        System.out.println(input);
     }
 }
