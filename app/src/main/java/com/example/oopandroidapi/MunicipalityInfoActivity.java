@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
@@ -27,6 +28,7 @@ public class MunicipalityInfoActivity extends AppCompatActivity {
     private MunicipalityInfoListAdapter adapter;
     private MunicipalityData municipalityData;
     private LinkedHashMap displayInformation = new LinkedHashMap<>();;
+    private ImageView imagePopulation;
     private String municipalityName = null;
 
     @Override
@@ -39,6 +41,8 @@ public class MunicipalityInfoActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
+        imagePopulation = (ImageView) findViewById(R.id.imagePopulation);
 
         municipalityName = null;
         Bundle extras = getIntent().getExtras();
@@ -63,6 +67,12 @@ public class MunicipalityInfoActivity extends AppCompatActivity {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
+                        //Determining the appropriate population image
+                        int population = municipalityData.getPopulationData().getPopulation();
+                        if(population < 40000){imagePopulation.setImageDrawable(getDrawable(R.drawable.image_small));}
+                        else if(population < 100000){imagePopulation.setImageDrawable(getDrawable(R.drawable.image_medium));}
+                        else{imagePopulation.setImageDrawable(getDrawable(R.drawable.image_large));}
+
                         //Displaying population data
                         displayInformation.put("Population", String.valueOf(municipalityData.getPopulationData().getPopulation()));
                         updateList();
