@@ -71,6 +71,7 @@ public class MainActivity extends AppCompatActivity {
                             });
                             Intent i = new Intent(MainActivity.this, MunicipalityInfoActivity.class);
                             i.putExtra("cityName", searchedCity);
+                            citySearch.setText("");
                             startActivity(i);
                         } else{
                             runOnUiThread(new Runnable() {

@@ -5,6 +5,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -104,6 +106,16 @@ public class MunicipalityInfoActivity extends AppCompatActivity {
                         LocalBroadcastManager.getInstance(getApplicationContext()).registerReceiver(receiver, new IntentFilter("com.example.POLITICS_REQUESTED"));
                         }
                 });
+            }
+        });
+
+        Button quizButton = (Button) findViewById(R.id.butttonQuiz);
+        quizButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(MunicipalityInfoActivity.this, QuizActivity.class);
+                i.putExtra("cityName", municipalityName);
+                startActivity(i);
             }
         });
     }
