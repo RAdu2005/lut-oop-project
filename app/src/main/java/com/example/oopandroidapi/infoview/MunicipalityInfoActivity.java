@@ -48,35 +48,41 @@ public class MunicipalityInfoActivity extends AppCompatActivity {
             return insets;
         });
 
+        //Disabling the quiz button until all data is fetched
         Button quizButton = (Button) findViewById(R.id.butttonQuiz);
         quizButton.setEnabled(false);
 
         imagePopulation = (ImageView) findViewById(R.id.imagePopulation);
 
+        //Getting municipality name from MainActivity intent
         municipalityName = null;
         Bundle extras = getIntent().getExtras();
         if(extras != null){
             municipalityName = extras.getString("cityName");
         }
 
+        //Setting the title to the searched municipality
         titleMunicipality = (TextView) findViewById(R.id.textCityName);
         titleMunicipality.setText(municipalityName);
 
+        //Building the RecyclerView
         RecyclerView rvInfo = findViewById(R.id.rvMunicipalityInfo);
         rvInfo.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
 
         adapter = new MunicipalityInfoListAdapter(getApplicationContext(), displayInformation);
         rvInfo.setAdapter(adapter);
 
+        //Runnable to get API data in the background and display after requests are complete
         ExecutorService service = Executors.newSingleThreadExecutor();
         service.execute(new Runnable() {
             @Override
             public void run() {
+                //Creating data object and completing API requests
                 municipalityData = new MunicipalityData(municipalityName, getApplicationContext());
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        //Determining the appropriate population image
+                        //Determining the appropriate population image based on the size of municipality (3 possibilities)
                         int population = municipalityData.getPopulationData().getPopulation();
                         if(population < 40000){imagePopulation.setImageDrawable(getDrawable(R.drawable.image_small));}
                         else if(population < 100000){imagePopulation.setImageDrawable(getDrawable(R.drawable.image_medium));}
@@ -116,14 +122,17 @@ public class MunicipalityInfoActivity extends AppCompatActivity {
                         displayInformation.put("Political composition", "Click to show more");
                         updateList();
 
+                        //Enabling the quiz button since all data has been fetched
                         quizButton.setEnabled(true);
 
+                        //Handling the display-on-request of political composition by OnClickListener in Adapter class via Broadcast and Intent
                         LocalBroadcastManager.getInstance(getApplicationContext()).registerReceiver(receiver, new IntentFilter("com.example.POLITICS_REQUESTED"));
                         }
                 });
             }
         });
 
+        //Launching quiz activity on "Quiz" button press
         quizButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -135,6 +144,7 @@ public class MunicipalityInfoActivity extends AppCompatActivity {
         });
     }
 
+    //Handling the broadcast from the Adapter class (for political data)
     BroadcastReceiver receiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -148,5 +158,6 @@ public class MunicipalityInfoActivity extends AppCompatActivity {
         }
     };
 
+    //Adding a single item to the RecyclerView list
     private void updateList(){adapter.notifyItemInserted(adapter.getItemCount() - 1);}
 }

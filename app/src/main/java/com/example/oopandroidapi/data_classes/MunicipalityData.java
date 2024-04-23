@@ -5,7 +5,7 @@ import android.content.Context;
 import java.io.Serializable;
 
 public class MunicipalityData implements Serializable {
-
+    //Class to store all data about a municipality with appropriate constructor and getters
     private PopulationData population = null;
     private WeatherData weather = null;
     private HealthData health = null;

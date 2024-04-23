@@ -36,6 +36,7 @@ public class DataRetriever {
     public static JsonNode areas = readAreaDataFromTheAPIURL(objectMapper);
     public static HashMap<String, String> municipalityNamesToCodesMap = createMunicipalityNamesToCodesMap(areas);
 
+    //Getting data via GET with ObjectMapper
     private static JsonNode getData(String sourceURL){
         try {            
             URL locationUrl = new URL(sourceURL);
@@ -53,16 +54,17 @@ public class DataRetriever {
         }
     }
 
+    //Getting data via POST with HttpURLConnection
     private static JsonNode getData(InputStream query, String sourceURL, int queryAreaPos, String code){
         try {
-            // The query for fetching data from a single municipality is stored in query.json
+            // The query for fetching data from a single municipality is stored in a json file in the res/raw folder
             JsonNode jsonQuery = objectMapper.readTree(query);
-            // Let's replace the municipality code in the query with the municipality that the user gave
-            // as input
+            // Replacing the code in the query with the desired one
             ((ObjectNode)jsonQuery.findValue("query").get(queryAreaPos).get("selection")).putArray("values").add(code);
 
             HttpURLConnection con = connectToAPIAndSendPostRequest(objectMapper, jsonQuery, sourceURL);
 
+            //Reading from the connection
             try(BufferedReader br = new BufferedReader(new InputStreamReader(con.getInputStream(), "utf-8"))) {
                 StringBuilder response = new StringBuilder();
                 String responseLine = null;
@@ -80,7 +82,7 @@ public class DataRetriever {
         }
     }
 
-
+    //Establishing the connection with the API and sending the query via POST
     private static HttpURLConnection connectToAPIAndSendPostRequest(ObjectMapper objectMapper, JsonNode jsonQuery, String sourceURL)
             throws MalformedURLException, IOException, ProtocolException, JsonProcessingException {
         URL url = new URL (sourceURL);
@@ -99,35 +101,11 @@ public class DataRetriever {
         return con;
     }
 
-    private static HttpURLConnection connectToAPIAndSendGetRequest(String sourceURL)
-            throws MalformedURLException, IOException, ProtocolException, JsonProcessingException {
-        URL url = new URL (sourceURL);
-
-        HttpURLConnection con = (HttpURLConnection)url.openConnection();
-
-        con.setRequestMethod("GET");
-        con.setRequestProperty("Content-Type", "application/json; utf-8");
-        con.setRequestProperty("Accept", "application/json");
-        con.setDoOutput(true);
-
-        return con;
-    }
-
-
-    /**
-     * In this method, we find all the municipality names and codes from the Json and put them into a HashMap,
-     * so that we can get search for the municipality code by providing the municipality name
-     * 
-     * @param areas
-     * @return HashMap where municipality name is mapped to municipality code
-     */
+    //Creating the initial mapping of city names to municipality codes
     private static HashMap<String, String> createMunicipalityNamesToCodesMap(JsonNode areas) {
         JsonNode codes = null;
         JsonNode names = null;
 
-        // Here we find the element "variables", and inside it we have the element "text", that has value "Area".
-        // Within the same element, we have the keys "values" which contains the municipality codes (e.g. KU123) as a list
-        // and "valueTexts" which contains the municipality names (e.g. Lahti) as a list
         for (JsonNode node :areas.findValue("variables")) {
             if (node.findValue("text").asText().equals("Area")) {
                  codes =  node.findValue("values");
@@ -135,12 +113,8 @@ public class DataRetriever {
             }
         }
 
-        // Let's store the municipality names as keys, and municipality codes as values in a HashMap
-
         HashMap<String, String> municipalityNamesToCodesMap = new HashMap<>();
 
-        // Here we can assume that the size of names and codes are equal, at there are as many municipality codes
-        // as there are municipality names
         for (int i = 0; i < names.size(); i++) {
             String name = names.get(i).asText();
             String code = codes.get(i).asText();
@@ -151,21 +125,11 @@ public class DataRetriever {
     }
 
 
-    /**
-     * Here we read the all the JSON from the URL to a JsonNode
-     * 
-     * How to improve this: instead of fetching the same data all over again when restarting the app, we could store
-     * the areas JSON to a file and read it from there. Then we would only need to fetch it once, if the file does
-     * not yet exist.
-     * 
-     * @param objectMapper
-     * @return JsonNode with municipality data
-     */
+    //Initial GET request for getting municipality codes
     private static JsonNode readAreaDataFromTheAPIURL(ObjectMapper objectMapper) {
         JsonNode areas = null;
         try {
             areas = objectMapper.readTree(new URL("https://pxdata.stat.fi:443/PxWeb/api/v1/en/StatFin/synt/statfin_synt_pxt_12dy.px"));
-            
    
         } catch (MalformedURLException e) {
             e.printStackTrace();
@@ -175,12 +139,14 @@ public class DataRetriever {
         return areas;
     }
 
+    //Bool function to check if a municipality exists (case- and diacritic-sensitive)
     public static boolean municipalityExists(String municipalityName){
         String code = municipalityNamesToCodesMap.get(municipalityName);
         if(code == null){return false;}
         return true;
     } 
 
+    //Getting population data and creating object
     public static PopulationData getPopulationData(String municipalityName, Context context){
         String code = municipalityNamesToCodesMap.get(municipalityName);
         //Getting population and population change data (with Statistics Finland)
@@ -211,6 +177,7 @@ public class DataRetriever {
         return new PopulationData(population, populationChange, employmentRate, sufficiencyRate, divorces);
     }
 
+    //Getting weather data and creating object
     public static WeatherData getWeatherData(String municipalityName){
         //Geolocation of city (with OpenWeather)
         String geolocationURL = "https://api.openweathermap.org/geo/1.0/direct?q=" + municipalityName +",FI&limit=1&appid=" + openWeatherAPIKey;
@@ -219,7 +186,7 @@ public class DataRetriever {
         cityLat = geolocationData.get(0).get("lat").floatValue();
         cityLon = geolocationData.get(0).get("lon").floatValue();
 
-        //Weather data in the city (with OpenWeather)
+        //Relevant weather data in the city (with OpenWeather)
         String weatherURL = "https://api.openweathermap.org/data/2.5/weather?lat=" + cityLat + "&lon=" + cityLon +"&appid=" + openWeatherAPIKey;
         JsonNode weatherData = getData(weatherURL);
         String weatherMain = weatherData.get("weather").get(0).get("main").asText();
@@ -230,6 +197,7 @@ public class DataRetriever {
         return new WeatherData(weatherMain, weatherTemp, weatherWind, weatherHumidity, cityLat, cityLon);
     }
 
+    //Getting health data and creating obbject
     public static HealthData getHealthData(String municipalityName){
         String code = municipalityNamesToCodesMap.get(municipalityName);
         code = code.substring(2, 5);
@@ -249,12 +217,15 @@ public class DataRetriever {
 
         //Getting wait times by AVI (with THL)
         JsonNode healthData = getData(healthDataURL);
+
+        //Parsing the returned matrix and calculating the position of relevant data
         int patientsOver14Days, patientsTotal = -1, rowStartOfDataByAVI = aviCode * 6;
         patientsTotal = Integer.parseInt(healthData.get("dataset").get("value").get(String.valueOf(rowStartOfDataByAVI + 5)).asText());
         patientsOver14Days = Integer.parseInt(healthData.get("dataset").get("value").get(String.valueOf(rowStartOfDataByAVI + 2)).asText()) +
                              Integer.parseInt(healthData.get("dataset").get("value").get(String.valueOf(rowStartOfDataByAVI + 3)).asText()) +
                              Integer.parseInt(healthData.get("dataset").get("value").get(String.valueOf(rowStartOfDataByAVI + 4)).asText());
         
+        //Calculating the percentage of patients admitted to healthcare after more than 14 days + checking for division by zero
         if(patientsTotal != 0){
             float percentageOver14Days = Math.round((patientsOver14Days *  1.0f) / patientsTotal * 10000) / 100.0f;
             return new HealthData(percentageOver14Days);
@@ -262,13 +233,14 @@ public class DataRetriever {
         return new HealthData(0);
     }
 
+    //Getting political data and creating object
     public static PoliticalData getPoliticalData(String municipalityName, Context context){
         HashMap<String, Float> returnMap = new HashMap<>();
 
         String code = municipalityNamesToCodesMap.get(municipalityName);
         code = code.substring(2, 5);
 
-        //Getting constituency code of municipality (with Statistics Finland)
+        //Getting constituency code of the municipality (with Statistics Finland)
         JsonNode politicalCorrespondenceData = getData(politicalDataURL);
         String constituencyCode = null;
         if(politicalCorrespondenceData.get("variables").get(1).get("values").isArray()){
@@ -279,6 +251,8 @@ public class DataRetriever {
                 }
             }
         }
+
+        //Handling data for Aland (is not included in the 2021 Municipal elections dataset)
         if(constituencyCode == null){
             returnMap.put("Political data for Åland not available", -1.0f);
             return new PoliticalData(returnMap);
@@ -292,6 +266,7 @@ public class DataRetriever {
             keys.add(keyIterator.next());
         }
 
+        //Building HashMap of key: party name and value: percentage of seats in council
         if(politicalData.get("value").isArray()){
             int count = 0;
             for(JsonNode node: politicalData.get("value")){

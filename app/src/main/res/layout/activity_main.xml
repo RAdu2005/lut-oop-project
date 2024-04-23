@@ -28,6 +28,8 @@
         android:layout_height="56dp"
         android:background="@drawable/search_edittext_bg"
         android:hint="🔍 Search..."
+        android:maxLines="1"
+        android:inputType="text"
         android:textColorHint="#999999"
         android:paddingStart="16dp"
         android:paddingEnd="16dp"

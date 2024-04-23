@@ -46,6 +46,7 @@ public class QuizActivity extends AppCompatActivity {
             return insets;
         });
 
+        //Getting data about city from Intent
         Bundle extras = getIntent().getExtras();
         if(extras != null){
             municipalityName = extras.getString("cityName");
@@ -57,6 +58,7 @@ public class QuizActivity extends AppCompatActivity {
         textHome = (TextView) findViewById(R.id.textHome);
         textHome.setClickable(true);
 
+        //Image / text button for going back to home screen
         imageHome.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -78,6 +80,7 @@ public class QuizActivity extends AppCompatActivity {
         scoreText = (TextView) findViewById(R.id.textScore);
         radioGroup = (RadioGroup) findViewById(R.id.radioGroup);
 
+        //Getting quiz and displaying the first question
         quiz = new Quiz(municipalityName, municipalityData);
         pos = 0;
         buildQuiz(pos);
@@ -85,10 +88,14 @@ public class QuizActivity extends AppCompatActivity {
 
         nextQuestion = (Button) findViewById(R.id.buttonSubmit);
         isQuizFinished = false;
+
+        //Showing subsequent questions and handling appropriate actions
         nextQuestion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //Checking if the last question was answered and changing "Next" button to "Back" button
                 if(!isQuizFinished) {
+                    //Getting the selecting option and handling scoring and displaying of the next question
                     int pressedButton = radioGroup.getCheckedRadioButtonId();
                     if (pressedButton == -1) {
                         Toast.makeText(getApplicationContext(), "You need to select an option", Toast.LENGTH_SHORT).show();
@@ -114,6 +121,7 @@ public class QuizActivity extends AppCompatActivity {
         });
     }
 
+    //Displaying a individual question and the 4 options
     private void buildQuiz(int pos){
         questionNumber.setText((pos + 1) + "/4");
 
@@ -121,7 +129,6 @@ public class QuizActivity extends AppCompatActivity {
         for(Map.Entry<String, ArrayList<String>> entry : quiz.getQuiz().entrySet()){
             if(count == pos){
                 questionText.setText(entry.getKey());
-                System.out.println(entry);
             }
             count++;
         }

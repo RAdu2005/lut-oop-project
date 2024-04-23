@@ -32,15 +32,19 @@ public class MunicipalityInfoListAdapter extends RecyclerView.Adapter<Municipali
 
     @Override
     public void onBindViewHolder(@NonNull MunicipalityInfoViewHolder holder, int position) {
+        //Iterating through the LinkedHashMap to display data
         int count = 0;
         for(Map.Entry<String, String> entry : displayInformation.entrySet()){
             if(position == count){
                 holder.information.setText(entry.getKey());
                 holder.value.setText(entry.getValue());
+
+                //Special case for handling political data with on-request expansion by clicking list item
                 if(entry.getKey().equals("Political composition")){
                     holder.information.setClickable(true);
                     holder.value.setClickable(true);
 
+                    //OnClickListeners for both the heading and subheading of list item which request data to be shown
                     holder.information.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {

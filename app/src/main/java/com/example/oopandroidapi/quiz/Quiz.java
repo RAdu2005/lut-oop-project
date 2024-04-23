@@ -18,9 +18,10 @@ public class Quiz {
     public Quiz(String cityName, MunicipalityData municipalityData){
         this.cityName = cityName;
         this.municipalityData = municipalityData;
-
         this.questionAnswerMap = buildQuiz();
     }
+
+    //Randomizer functions for generating 3 additional, believable answers for each question
 
     private ArrayList<String> populationRandomizer(int population){
         HashSet<Integer> numbers = new HashSet<>();
@@ -107,6 +108,7 @@ public class Quiz {
     }
 
     private LinkedHashMap<String, ArrayList<String>> buildQuiz(){
+        //Populating map with questions and answer keys, as well as the answer on the last (undisplayed) position for checking
         questionAnswerMap.put("What is the population of " + cityName + " ?", populationRandomizer(municipalityData.getPopulationData().getPopulation()));
         questionAnswerMap.put("What is the temperature in " + cityName + " right now?", temperatureRandomizer(municipalityData.getWeatherData().getTemperature()));
         questionAnswerMap.put("How many divorces took place in " + cityName + " in 2022?", divorcesRandomizer(municipalityData.getPopulationData().getDivorces()));

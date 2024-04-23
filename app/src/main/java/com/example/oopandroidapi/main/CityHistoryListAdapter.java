@@ -24,6 +24,8 @@ public class CityHistoryListAdapter extends RecyclerView.Adapter<CityHistoryView
     @Override
     public void onBindViewHolder(@NonNull CityHistoryViewHolder holder, int position) {
         holder.cityName.setText(CityHistoryStorage.getInstance().getCityList().get(position));
+
+        //Functionality for clicking on previously searched cities to search for information
         holder.cityName.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

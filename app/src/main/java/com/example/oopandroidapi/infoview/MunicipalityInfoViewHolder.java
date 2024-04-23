@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.oopandroidapi.R;
 
 public class MunicipalityInfoViewHolder extends RecyclerView.ViewHolder {
+    //ViewHolder class for listing information about a municipality
     TextView information, value;
     public MunicipalityInfoViewHolder(@NonNull View itemView) {
         super(itemView);
