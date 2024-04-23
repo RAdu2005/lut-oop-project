@@ -11,6 +11,7 @@ public class Quiz {
     private String cityName;
     private LinkedHashMap<String, ArrayList<String>> questionAnswerMap = new LinkedHashMap<>();
     private MunicipalityData municipalityData;
+    private Random rand = new Random();
 
     public Quiz(String cityName, MunicipalityData municipalityData){
         this.cityName = cityName;
@@ -20,7 +21,6 @@ public class Quiz {
     }
 
     private ArrayList<String> populationRandomizer(int population){
-        Random rand = new Random();
         HashSet<Integer> numbers = new HashSet<>();
         ArrayList<String> returnList = new ArrayList<>();
 
@@ -28,7 +28,6 @@ public class Quiz {
         while(numbers.size() < 4){
             int signModifier = rand.nextInt(1) == 1 ? 1 : -1;
             float modifier = signModifier * rand.nextInt(25) / 100.0f;
-            //UNIQUE VALUES!!!!!!!!!!!!!!!!!!!!!!!!!! + testing selecting no option
             numbers.add(Math.round(population + (population * modifier)));
         }
 
@@ -43,7 +42,6 @@ public class Quiz {
     }
 
     private ArrayList<String> temperatureRandomizer(long temperature){
-        Random rand = new Random();
         HashSet<Integer> numbers = new HashSet<>();
         ArrayList<String> returnList = new ArrayList<>();
 
@@ -64,9 +62,53 @@ public class Quiz {
         return returnList;
     }
 
+    private ArrayList<String> divorcesRandomizer(int divorces){
+        HashSet<Integer> numbers = new HashSet<>();
+        ArrayList<String> returnList = new ArrayList<>();
+
+        numbers.add(divorces);
+        while(numbers.size() < 4){
+            int signModifier = rand.nextInt(1) == 1 ? 1 : -1;
+            float modifier = signModifier * (rand.nextInt(25) * 2) / 100.0f;
+            numbers.add(Math.round(divorces + (divorces * modifier)));
+        }
+
+        for(Integer i : numbers){
+            returnList.add(String.valueOf(i));
+        }
+
+        Collections.shuffle(returnList);
+        returnList.add(String.valueOf(divorces));
+
+        return returnList;
+    }
+
+    private ArrayList<String> employmentRandomizer(float employmentRate){
+        HashSet<Float> numbers = new HashSet<>();
+        ArrayList<String> returnList = new ArrayList<>();
+
+        numbers.add(employmentRate);
+        while(numbers.size() < 4){
+            int signModifier = rand.nextInt(1) == 1 ? 1 : -1;
+            float modifier = signModifier * rand.nextInt(32) / 100.0f;
+            numbers.add(Math.round((employmentRate + (employmentRate * modifier)) * 10) / 10.0f);
+        }
+
+        for(Float i : numbers){
+            returnList.add(String.valueOf(i));
+        }
+
+        Collections.shuffle(returnList);
+        returnList.add(String.valueOf(employmentRate));
+
+        return returnList;
+    }
+
     private LinkedHashMap<String, ArrayList<String>> buildQuiz(){
         questionAnswerMap.put("What is the population of " + cityName + " ?", populationRandomizer(municipalityData.getPopulationData().getPopulation()));
         questionAnswerMap.put("What is the temperature in " + cityName + " right now?", temperatureRandomizer(municipalityData.getWeatherData().getTemperature()));
+        questionAnswerMap.put("How many divorces took place in " + cityName + " in 2022?", divorcesRandomizer(municipalityData.getPopulationData().getDivorces()));
+        questionAnswerMap.put("What is the employment rate in " + cityName + " in 2022?", employmentRandomizer(municipalityData.getPopulationData().getEmploymentRate()));
 
         return questionAnswerMap;
     }

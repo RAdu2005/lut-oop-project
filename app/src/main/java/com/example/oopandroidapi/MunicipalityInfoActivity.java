@@ -89,7 +89,7 @@ public class MunicipalityInfoActivity extends AppCompatActivity {
                         displayInformation.put("Employment rate (%)", String.valueOf(municipalityData.getPopulationData().getEmploymentRate()));
                         updateList();
 
-                        displayInformation.put("Workplace self-sufficiency rate (%)", String.valueOf(municipalityData.getPopulationData().getEmploymentRate()));
+                        displayInformation.put("Workplace self-sufficiency rate (%)", String.valueOf(municipalityData.getPopulationData().getSufficiencyRate()));
 
                         //Displaying weather data
                         displayInformation.put("Weather", municipalityData.getWeatherData().getWeather());
