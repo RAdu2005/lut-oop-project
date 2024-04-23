@@ -4,7 +4,7 @@ This is the implementation of the project application by Radu Stoiana and Iikka 
 
 The app should not require the installation or creation of any other resources. For any errors please reach out via email to: Radu.Stoiana@student.lut.fi
 
-**The API targets version 34!**
+**The app targets API version 34!**
 
 The rest of the documentation regarding the project was sent via PDF on Moodle. 
 
