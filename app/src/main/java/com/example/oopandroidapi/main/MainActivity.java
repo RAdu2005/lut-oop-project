@@ -74,7 +74,6 @@ public class MainActivity extends AppCompatActivity {
                         searchedCity = searchedCity.substring(0, 1).toUpperCase() + searchedCity.substring(1, searchedCity.length());
                     }
                 }
-                System.out.println(searchedCity);
                 ExecutorService service = Executors.newSingleThreadExecutor();
                 service.execute(new Runnable() {
                     @Override
