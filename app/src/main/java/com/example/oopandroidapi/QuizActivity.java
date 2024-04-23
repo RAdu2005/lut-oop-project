@@ -77,7 +77,7 @@ public class QuizActivity extends AppCompatActivity {
         quiz = new Quiz(municipalityName, municipalityData);
         pos = 0;
         buildQuiz(pos);
-        scoreText.setText("Score: " + score + "/5");
+        scoreText.setText("Score: " + score + "/4");
 
         nextQuestion = (Button) findViewById(R.id.buttonSubmit);
         isQuizFinished = false;
@@ -93,7 +93,7 @@ public class QuizActivity extends AppCompatActivity {
                         if (selectedButton.getText().equals(quiz.getQuiz().get(questionText.getText()).get(4))) {
                             score++;
                         }
-                        scoreText.setText("Score: " + score + "/5");
+                        scoreText.setText("Score: " + score + "/4");
                         if (pos != quiz.getQuiz().size() - 1) {
                             radioGroup.clearCheck();
                             pos++;
@@ -111,7 +111,7 @@ public class QuizActivity extends AppCompatActivity {
     }
 
     private void buildQuiz(int pos){
-        questionNumber.setText((pos + 1) + "/5");
+        questionNumber.setText((pos + 1) + "/4");
 
         int count = 0;
         for(Map.Entry<String, ArrayList<String>> entry : quiz.getQuiz().entrySet()){
