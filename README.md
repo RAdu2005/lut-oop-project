@@ -6,6 +6,6 @@ The app should not require the installation or creation of any other resources. 
 
 **The app targets API version 34!**
 
-The rest of the documentation regarding the project was sent via PDF on Moodle. 
+The rest of the documentation regarding the project is in the PDF file in this repository. 
 
 ### Thank you!
