@@ -5,46 +5,40 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".quiz.QuizActivity">
+    android:background="#F3F3F3"
+    tools:context=".QuizActivity">
 
     <TextView
         android:id="@+id/textCount"
-        android:layout_width="65dp"
+        android:layout_width="wrap_content"
         android:layout_height="43dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
-        android:layout_marginBottom="20dp"
         android:text="x/y"
-        android:textSize="24dp"
+        android:textSize="24sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/textQuestion"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.05"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/textQuestion"
-        android:layout_width="328dp"
-        android:layout_height="75dp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:text="QUESTION HERE"
-        android:textSize="20dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.2"
+        android:textSize="20sp"
+        app:layout_constraintTop_toBottomOf="@+id/textCount"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textCount" />
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <RadioGroup
         android:id="@+id/radioGroup"
-        android:layout_width="328dp"
-        android:layout_height="197dp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.17"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textQuestion"
-        app:layout_constraintVertical_bias="0.0">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
 
         <RadioButton
             android:id="@+id/radioQ1"
@@ -73,50 +67,43 @@
 
     <Button
         android:id="@+id/buttonSubmit"
-        android:layout_width="134dp"
+        android:layout_width="0dp"
         android:layout_height="49dp"
-        android:layout_marginBottom="228dp"
+        android:layout_marginTop="24dp"
         android:text="Submit"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.05"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/radioGroup"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <ImageView
         android:id="@+id/imageHome"
         android:layout_width="40dp"
         android:layout_height="40dp"
-        android:layout_marginEnd="64dp"
-        app:layout_constraintBottom_toTopOf="@+id/textQuestion"
+        android:layout_marginEnd="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.487"
         app:srcCompat="@drawable/home" />
 
     <TextView
         android:id="@+id/textHome"
-        android:layout_width="65dp"
-        android:layout_height="40dp"
-        android:layout_marginBottom="20dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:text="Home"
-        android:textSize="24dp"
+        android:textSize="18sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/textQuestion"
-        app:layout_constraintEnd_toStartOf="@+id/imageHome"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toEndOf="@+id/textCount" />
+        app:layout_constraintBottom_toBottomOf="@+id/imageHome"
+        app:layout_constraintEnd_toStartOf="@+id/imageHome" />
 
     <TextView
         android:id="@+id/textScore"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Score: x/5"
-        android:textSize="20dp"
+        android:textSize="20sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/buttonSubmit"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.044"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/radioGroup" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/buttonSubmit"
+        android:layout_marginTop="24dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

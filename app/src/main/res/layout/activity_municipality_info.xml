@@ -5,7 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".infoview.MunicipalityInfoActivity">
+    tools:context=".MunicipalityInfoActivity">
 
     <TextView
         android:id="@+id/textCityName"
@@ -59,8 +59,8 @@
 
     <Button
         android:id="@+id/butttonQuiz"
-        android:layout_width="256dp"
-        android:layout_height="wrap_content"
+        android:layout_width="400dp"
+        android:layout_height="59dp"
         android:text="Quiz"
         android:textSize="24dp"
         android:textStyle="bold"
