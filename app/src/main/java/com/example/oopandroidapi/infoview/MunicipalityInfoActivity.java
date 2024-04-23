@@ -1,4 +1,4 @@
-package com.example.oopandroidapi;
+package com.example.oopandroidapi.infoview;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -18,6 +18,10 @@ import androidx.core.view.WindowInsetsCompat;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.oopandroidapi.data_classes.MunicipalityData;
+import com.example.oopandroidapi.R;
+import com.example.oopandroidapi.quiz.QuizActivity;
 
 import java.util.LinkedHashMap;
 import java.util.Map;

@@ -1,4 +1,4 @@
-package com.example.oopandroidapi;
+package com.example.oopandroidapi.infoview;
 
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -9,6 +9,8 @@ import android.content.Context;
 import androidx.annotation.NonNull;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.oopandroidapi.R;
 
 import java.util.LinkedHashMap;
 import java.util.Map;

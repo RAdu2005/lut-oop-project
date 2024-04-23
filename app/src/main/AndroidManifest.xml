@@ -17,13 +17,13 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
-            android:name=".QuizActivity"
+            android:name=".quiz.QuizActivity"
             android:exported="false" />
         <activity
-            android:name=".MunicipalityInfoActivity"
+            android:name=".infoview.MunicipalityInfoActivity"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
+            android:name=".main.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

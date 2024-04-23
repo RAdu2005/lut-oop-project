@@ -1,4 +1,4 @@
-package com.example.oopandroidapi;
+package com.example.oopandroidapi.data_classes;
 
 import java.io.Serializable;
 import java.util.ArrayList;

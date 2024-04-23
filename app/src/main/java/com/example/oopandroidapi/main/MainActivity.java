@@ -1,4 +1,4 @@
-package com.example.oopandroidapi;
+package com.example.oopandroidapi.main;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -8,10 +8,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -20,8 +18,10 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.ArrayList;
-import java.util.Map;
+import com.example.oopandroidapi.data_classes.DataRetriever;
+import com.example.oopandroidapi.R;
+import com.example.oopandroidapi.infoview.MunicipalityInfoActivity;
+
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 

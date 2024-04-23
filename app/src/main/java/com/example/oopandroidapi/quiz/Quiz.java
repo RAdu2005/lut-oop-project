@@ -1,4 +1,6 @@
-package com.example.oopandroidapi;
+package com.example.oopandroidapi.quiz;
+
+import com.example.oopandroidapi.data_classes.MunicipalityData;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -26,7 +28,7 @@ public class Quiz {
 
         numbers.add(population);
         while(numbers.size() < 4){
-            int signModifier = rand.nextInt(1) == 1 ? 1 : -1;
+            int signModifier = rand.nextInt(2) == 1 ? 1 : -1;
             float modifier = signModifier * rand.nextInt(25) / 100.0f;
             numbers.add(Math.round(population + (population * modifier)));
         }
@@ -47,7 +49,7 @@ public class Quiz {
 
         numbers.add((int) temperature);
         while(numbers.size() < 4){
-            int signModifier = rand.nextInt(1) == 1 ? 1 : -1;
+            int signModifier = rand.nextInt(2) == 1 ? 1 : -1;
             float modifier = signModifier * rand.nextInt(45) / 100.0f;
             numbers.add(Math.round(temperature + (temperature * modifier) + rand.nextInt(5) * signModifier));
         }
@@ -68,7 +70,7 @@ public class Quiz {
 
         numbers.add(divorces);
         while(numbers.size() < 4){
-            int signModifier = rand.nextInt(1) == 1 ? 1 : -1;
+            int signModifier = rand.nextInt(2) == 1 ? 1 : -1;
             float modifier = signModifier * (rand.nextInt(25) * 2) / 100.0f;
             numbers.add(Math.round(divorces + (divorces * modifier)));
         }
@@ -89,7 +91,7 @@ public class Quiz {
 
         numbers.add(employmentRate);
         while(numbers.size() < 4){
-            int signModifier = rand.nextInt(1) == 1 ? 1 : -1;
+            int signModifier = rand.nextInt(2) == 1 ? 1 : -1;
             float modifier = signModifier * rand.nextInt(32) / 100.0f;
             numbers.add(Math.round((employmentRate + (employmentRate * modifier)) * 10) / 10.0f);
         }

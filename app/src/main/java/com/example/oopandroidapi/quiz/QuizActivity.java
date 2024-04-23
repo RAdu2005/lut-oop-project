@@ -1,4 +1,4 @@
-package com.example.oopandroidapi;
+package com.example.oopandroidapi.quiz;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -15,6 +15,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+
+import com.example.oopandroidapi.main.MainActivity;
+import com.example.oopandroidapi.data_classes.MunicipalityData;
+import com.example.oopandroidapi.R;
 
 import java.util.ArrayList;
 import java.util.Map;

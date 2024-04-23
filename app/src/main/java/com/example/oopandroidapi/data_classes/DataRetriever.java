@@ -1,9 +1,8 @@
-package com.example.oopandroidapi;
+package com.example.oopandroidapi.data_classes;
 
 import android.content.Context;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -16,11 +15,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 
+import com.example.oopandroidapi.R;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.core.util.DefaultPrettyPrinter;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.ObjectWriter;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
@@ -28,7 +26,7 @@ public class DataRetriever {
 
     private static final String populationDataURL = "https://pxdata.stat.fi:443/PxWeb/api/v1/en/StatFin/synt/statfin_synt_pxt_12dy.px";
     private static final String employmentDataURL = "https://pxdata.stat.fi:443/PxWeb/api/v1/en/StatFin/tyokay/statfin_tyokay_pxt_115x.px";
-    private static final String sufficencyDataURL = "https://pxdata.stat.fi:443/PxWeb/api/v1/en/StatFin/tyokay/statfin_tyokay_pxt_125s.px";
+    private static final String sufficiencyDataURL = "https://pxdata.stat.fi:443/PxWeb/api/v1/en/StatFin/tyokay/statfin_tyokay_pxt_125s.px";
     private static final String municipalityAVICodeURL = "https://data.stat.fi/api/classifications/v2/correspondenceTables/kunta_1_20240101%23avi_1_20240101/maps?content=data&format=json&lang=en&meta=min";
     private static final String healthDataURL = "https://sampo.thl.fi/pivot/prod/fi/avohpaasy/pthjono01/fact_ahil_pthjono01.json";
     private static final String politicalDataURL = "https://pxdata.stat.fi:443/PxWeb/api/v1/en/StatFin/kvaa/statfin_kvaa_pxt_12xf.px";
@@ -204,13 +202,13 @@ public class DataRetriever {
         float employmentRate;
         employmentRate = employmentData.get("value").get(0).floatValue();
 
-        //Getting workplace self-suffciency data (with Statistics Finland)
+        //Getting workplace self-sufficiency data (with Statistics Finland)
             
-        JsonNode sufficiencyData = getData(context.getResources().openRawResource(R.raw.query_sufficiency), sufficencyDataURL, 0, code);
-        float suffciencyRate;
-        suffciencyRate = sufficiencyData.get("value").get(0).floatValue();
+        JsonNode sufficiencyData = getData(context.getResources().openRawResource(R.raw.query_sufficiency), sufficiencyDataURL, 0, code);
+        float sufficiencyRate;
+        sufficiencyRate = sufficiencyData.get("value").get(0).floatValue();
 
-        return new PopulationData(population, populationChange, employmentRate, suffciencyRate, divorces);
+        return new PopulationData(population, populationChange, employmentRate, sufficiencyRate, divorces);
     }
 
     public static WeatherData getWeatherData(String municipalityName){
@@ -251,14 +249,14 @@ public class DataRetriever {
 
         //Getting wait times by AVI (with THL)
         JsonNode healthData = getData(healthDataURL);
-        int paitentsOver14Days, patientsTotal = -1, rowStartOfDataByAVI = aviCode * 6;
+        int patientsOver14Days, patientsTotal = -1, rowStartOfDataByAVI = aviCode * 6;
         patientsTotal = Integer.parseInt(healthData.get("dataset").get("value").get(String.valueOf(rowStartOfDataByAVI + 5)).asText());
-        paitentsOver14Days = Integer.parseInt(healthData.get("dataset").get("value").get(String.valueOf(rowStartOfDataByAVI + 2)).asText()) +
+        patientsOver14Days = Integer.parseInt(healthData.get("dataset").get("value").get(String.valueOf(rowStartOfDataByAVI + 2)).asText()) +
                              Integer.parseInt(healthData.get("dataset").get("value").get(String.valueOf(rowStartOfDataByAVI + 3)).asText()) +
                              Integer.parseInt(healthData.get("dataset").get("value").get(String.valueOf(rowStartOfDataByAVI + 4)).asText());
         
         if(patientsTotal != 0){
-            float percentageOver14Days = Math.round((paitentsOver14Days *  1.0f) / patientsTotal * 10000) / 100.0f;
+            float percentageOver14Days = Math.round((patientsOver14Days *  1.0f) / patientsTotal * 10000) / 100.0f;
             return new HealthData(percentageOver14Days);
         }
         return new HealthData(0);
