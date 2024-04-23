@@ -30,7 +30,7 @@ import java.util.concurrent.Executors;
 
 
 public class MunicipalityInfoActivity extends AppCompatActivity {
-    private TextView titleMunicipality;
+    private TextView titleMunicipality ,textIndex;
     private MunicipalityInfoListAdapter adapter;
     private MunicipalityData municipalityData;
     private LinkedHashMap displayInformation = new LinkedHashMap<>();;
@@ -122,6 +122,9 @@ public class MunicipalityInfoActivity extends AppCompatActivity {
                         displayInformation.put("Political composition", "Click to show more");
                         updateList();
 
+                        //Calculate and display index
+                        calculateAndDisplayCAI(municipalityData);
+
                         //Enabling the quiz button since all data has been fetched
                         quizButton.setEnabled(true);
 
@@ -160,4 +163,31 @@ public class MunicipalityInfoActivity extends AppCompatActivity {
 
     //Adding a single item to the RecyclerView list
     private void updateList(){adapter.notifyItemInserted(adapter.getItemCount() - 1);}
+
+    private void calculateAndDisplayCAI(MunicipalityData municipalityData){
+        textIndex = (TextView) findViewById(R.id.textIndex);
+
+        float score = 1.8f;
+
+        float percentageAfter14Days = municipalityData.getHealthData().getPercentageOver14Days();
+        int population = municipalityData.getPopulationData().getPopulation();
+        int populationChange = municipalityData.getPopulationData().getPopulationChange();
+        float employmentRate = municipalityData.getPopulationData().getEmploymentRate();
+        float sufficiencyRate = municipalityData.getPopulationData().getSufficiencyRate();
+
+        score += (-1 * percentageAfter14Days) / 100.0f +
+                (populationChange * 1.0f / population) * 100 +
+                (employmentRate - 70) / 10.0f +
+                (sufficiencyRate - 100) / 12.5f;
+
+        score = Math.round(score * 10) / 10.0f;
+
+        if(score <= 0){
+            score = 0.1f;
+        }else if(score >= 5){
+            score = 5.0f;
+        }
+
+        textIndex.setText("City Atractiveness Index: " + score + "⭐");
+    }
 }
