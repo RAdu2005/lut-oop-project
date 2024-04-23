@@ -188,6 +188,6 @@ public class MunicipalityInfoActivity extends AppCompatActivity {
             score = 5.0f;
         }
 
-        textIndex.setText("City Atractiveness Index: " + score + "⭐");
+        textIndex.setText("City Attractiveness Index: " + score + "⭐");
     }
 }
