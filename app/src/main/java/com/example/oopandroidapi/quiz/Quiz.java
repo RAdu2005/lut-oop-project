@@ -30,7 +30,7 @@ public class Quiz {
         numbers.add(population);
         while(numbers.size() < 4){
             int signModifier = rand.nextInt(2) == 1 ? 1 : -1;
-            float modifier = signModifier * rand.nextInt(25) / 100.0f;
+            float modifier = signModifier * rand.nextInt(27) / 100.0f;
             numbers.add(Math.round(population + (population * modifier)));
         }
 
@@ -52,7 +52,7 @@ public class Quiz {
         while(numbers.size() < 4){
             int signModifier = rand.nextInt(2) == 1 ? 1 : -1;
             float modifier = signModifier * rand.nextInt(45) / 100.0f;
-            numbers.add(Math.round(temperature + (temperature * modifier) + rand.nextInt(5) * signModifier));
+            numbers.add(Math.round(temperature + (temperature * modifier) + rand.nextInt(6) * signModifier));
         }
 
         for(Integer i : numbers){
@@ -68,6 +68,15 @@ public class Quiz {
     private ArrayList<String> divorcesRandomizer(int divorces){
         HashSet<Integer> numbers = new HashSet<>();
         ArrayList<String> returnList = new ArrayList<>();
+        if(divorces < 20){
+            numbers.add(divorces + 2);
+            numbers.add(divorces + 4);
+            if(divorces == 0){
+                numbers.add(divorces + 7);
+            }else{
+                numbers.add(divorces - 1);
+            }
+        }
 
         numbers.add(divorces);
         while(numbers.size() < 4){
