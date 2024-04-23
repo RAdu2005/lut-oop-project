@@ -189,12 +189,13 @@ public class DataRetriever {
 
         JsonNode populationData = getData(context.getResources().openRawResource(R.raw.query_population), populationDataURL, 0, code);
 
-        int population, populationChange;
+        int population, populationChange, divorces;
         ArrayNode populationDataArray = objectMapper.createArrayNode();
 
         populationData.get("value").elements().forEachRemaining(populationDataArray::add);
-        population = Math.max(populationDataArray.get(0).intValue(), populationDataArray.get(1).intValue());
-        populationChange = Math.min(populationDataArray.get(0).intValue(), populationDataArray.get(1).intValue());
+        divorces = populationDataArray.get(0).intValue();
+        populationChange = populationDataArray.get(1).intValue();
+        population = populationDataArray.get(2).intValue();
 
         //Getting employment rate data (with Statistics Finland)
 
@@ -209,7 +210,7 @@ public class DataRetriever {
         float suffciencyRate;
         suffciencyRate = sufficiencyData.get("value").get(0).floatValue();
 
-        return new PopulationData(population, populationChange, employmentRate, suffciencyRate);
+        return new PopulationData(population, populationChange, employmentRate, suffciencyRate, divorces);
     }
 
     public static WeatherData getWeatherData(String municipalityName){

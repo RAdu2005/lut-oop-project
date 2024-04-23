@@ -44,6 +44,9 @@ public class MunicipalityInfoActivity extends AppCompatActivity {
             return insets;
         });
 
+        Button quizButton = (Button) findViewById(R.id.butttonQuiz);
+        quizButton.setEnabled(false);
+
         imagePopulation = (ImageView) findViewById(R.id.imagePopulation);
 
         municipalityName = null;
@@ -82,6 +85,12 @@ public class MunicipalityInfoActivity extends AppCompatActivity {
                         displayInformation.put("Population change", String.valueOf(municipalityData.getPopulationData().getPopulationChange()));
                         updateList();
 
+                        //Displaying employment data
+                        displayInformation.put("Employment rate (%)", String.valueOf(municipalityData.getPopulationData().getEmploymentRate()));
+                        updateList();
+
+                        displayInformation.put("Workplace self-sufficiency rate (%)", String.valueOf(municipalityData.getPopulationData().getEmploymentRate()));
+
                         //Displaying weather data
                         displayInformation.put("Weather", municipalityData.getWeatherData().getWeather());
                         updateList();
@@ -103,13 +112,14 @@ public class MunicipalityInfoActivity extends AppCompatActivity {
                         displayInformation.put("Political composition", "Click to show more");
                         updateList();
 
+                        quizButton.setEnabled(true);
+
                         LocalBroadcastManager.getInstance(getApplicationContext()).registerReceiver(receiver, new IntentFilter("com.example.POLITICS_REQUESTED"));
                         }
                 });
             }
         });
 
-        Button quizButton = (Button) findViewById(R.id.butttonQuiz);
         quizButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

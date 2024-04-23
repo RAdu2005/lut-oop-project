@@ -2,6 +2,7 @@ package com.example.oopandroidapi;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.Random;
 
@@ -20,16 +21,21 @@ public class Quiz {
 
     private ArrayList<String> populationRandomizer(int population){
         Random rand = new Random();
+        HashSet<Integer> numbers = new HashSet<>();
         ArrayList<String> returnList = new ArrayList<>();
 
-        for(int i = 0; i < 3; i++){
+        numbers.add(population);
+        while(numbers.size() < 4){
             int signModifier = rand.nextInt(1) == 1 ? 1 : -1;
             float modifier = signModifier * rand.nextInt(25) / 100.0f;
             //UNIQUE VALUES!!!!!!!!!!!!!!!!!!!!!!!!!! + testing selecting no option
-            returnList.add(String.valueOf(Math.round(population + (population * modifier))));
+            numbers.add(Math.round(population + (population * modifier)));
         }
 
-        returnList.add(String.valueOf(population));
+        for(Integer i : numbers){
+            returnList.add(String.valueOf(i));
+        }
+
         Collections.shuffle(returnList);
         returnList.add(String.valueOf(population));
 
@@ -38,16 +44,20 @@ public class Quiz {
 
     private ArrayList<String> temperatureRandomizer(long temperature){
         Random rand = new Random();
+        HashSet<Integer> numbers = new HashSet<>();
         ArrayList<String> returnList = new ArrayList<>();
 
-        for(int i = 0; i < 3; i++){
+        numbers.add((int) temperature);
+        while(numbers.size() < 4){
             int signModifier = rand.nextInt(1) == 1 ? 1 : -1;
-            float modifier = signModifier * rand.nextInt(25) / 100.0f;
-
-            returnList.add(String.valueOf(Math.round(temperature + (temperature * modifier))));
+            float modifier = signModifier * rand.nextInt(45) / 100.0f;
+            numbers.add(Math.round(temperature + (temperature * modifier) + rand.nextInt(5) * signModifier));
         }
 
-        returnList.add(String.valueOf(temperature));
+        for(Integer i : numbers){
+            returnList.add(String.valueOf(i));
+        }
+
         Collections.shuffle(returnList);
         returnList.add(String.valueOf(temperature));
 

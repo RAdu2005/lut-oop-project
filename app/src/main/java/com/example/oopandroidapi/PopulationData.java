@@ -3,14 +3,15 @@ package com.example.oopandroidapi;
 import java.io.Serializable;
 
 public class PopulationData implements Serializable {
-    private int population, populationChange;
+    private int population, populationChange, divorces;
     private float employmentRate, suffciencyRate;
 
-    public PopulationData(int population, int populationChange, float employmentRate, float suffciencyRate){
+    public PopulationData(int population, int populationChange, float employmentRate, float sufficiencyRate, int divorces){
         this.population = population;
         this. populationChange = populationChange;
         this.employmentRate = employmentRate;
-        this.suffciencyRate = suffciencyRate;
+        this.suffciencyRate = sufficiencyRate;
+        this.divorces = divorces;
     }
 
     public int getPopulation(){
@@ -28,4 +29,5 @@ public class PopulationData implements Serializable {
     public float getSufficiencyRate(){
         return suffciencyRate;
     }
+    public int getDivorces(){return divorces;}
 }
