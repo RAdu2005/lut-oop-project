@@ -1,5 +1,6 @@
 package com.example.oopandroidapi;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -7,7 +8,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
-public class PoliticalData {
+public class PoliticalData implements Serializable {
     private HashMap<String, Float> councilComposition = new HashMap<>();
 
     public PoliticalData(HashMap<String, Float> councilComposition){

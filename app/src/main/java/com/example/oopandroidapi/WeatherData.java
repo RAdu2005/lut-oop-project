@@ -1,6 +1,8 @@
 package com.example.oopandroidapi;
 
-public class WeatherData {
+import java.io.Serializable;
+
+public class WeatherData implements Serializable {
     private String weather;
     private long temperature, windSpeed, humidity;
     private float lat, lon;

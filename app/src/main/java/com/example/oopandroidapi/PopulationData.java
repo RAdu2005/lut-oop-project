@@ -1,6 +1,8 @@
 package com.example.oopandroidapi;
 
-public class PopulationData {
+import java.io.Serializable;
+
+public class PopulationData implements Serializable {
     private int population, populationChange;
     private float employmentRate, suffciencyRate;
 

@@ -2,7 +2,9 @@ package com.example.oopandroidapi;
 
 import android.content.Context;
 
-public class MunicipalityData {
+import java.io.Serializable;
+
+public class MunicipalityData implements Serializable {
 
     private PopulationData population = null;
     private WeatherData weather = null;

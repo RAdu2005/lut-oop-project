@@ -115,6 +115,7 @@ public class MunicipalityInfoActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent i = new Intent(MunicipalityInfoActivity.this, QuizActivity.class);
                 i.putExtra("cityName", municipalityName);
+                i.putExtra("cityData", municipalityData);
                 startActivity(i);
             }
         });
